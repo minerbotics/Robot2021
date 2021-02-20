@@ -9,28 +9,41 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.ClimbConstants;
+import frc.robot.Constants;
 
-public class Climber extends SubsystemBase {
+public class Shooter extends SubsystemBase {
 
-  private final Spark climbMotor;
+  private final Spark shooterMotor;
   /**
-   * Creates a new Climber.
+   * Creates a new ExampleSubsystem.
    */
-  public Climber() {
-    climbMotor = new Spark(ClimbConstants.kClimbMotorPort);
+  public Shooter() {
+
+    shooterMotor = new Spark(Constants.ShooterConstants.kShooterMotorPort);
   }
 
-  public void winch() {
-    climbMotor.set(-1);
+  public void shoot1() {
+    shooterMotor.set(-0.25);
+  }
+
+  public void shoot2() {
+    shooterMotor.set(-0.5);
+  }
+
+  public void shoot3() {
+    shooterMotor.set(-0.75);
+  }
+
+  public void shoot4() {
+    shooterMotor.set(-1);
   }
 
   public void stop() {
-    climbMotor.set(0);
+    shooterMotor.set(0);
   }
 
-  public void reverse() {
-    climbMotor.set(1);
+  public void clearball() {
+    shooterMotor.set(0.25);
   }
 
   @Override

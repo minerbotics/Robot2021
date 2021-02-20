@@ -14,26 +14,26 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ArcadeDrive;
-import frc.robot.commands.Climb;
-import frc.robot.commands.DumpAndRun;
+import frc.robot.commands.ClearBall;
 import frc.robot.commands.Eject;
+import frc.robot.commands.Feed;
 import frc.robot.commands.Harvest;
 import frc.robot.commands.LowerArm;
 import frc.robot.commands.RaiseArm;
-import frc.robot.commands.ResetClimb;
-import frc.robot.commands.RunAndDump;
-import frc.robot.commands.RunAndDumpAndRun;
-import frc.robot.commands.RunBackward;
-import frc.robot.commands.RunForward;
+import frc.robot.commands.Shoot1;
+import frc.robot.commands.Shoot2;
+import frc.robot.commands.Shoot3;
+import frc.robot.commands.Shoot4;
 import frc.robot.commands.StopArm;
-import frc.robot.commands.StopClimb;
+import frc.robot.commands.StopFeed;
 import frc.robot.commands.StopHarvest;
-import frc.robot.commands.ZagLeftAndDump;
-import frc.robot.commands.ZagRightAndDump;
+import frc.robot.commands.StopShooter;
+import frc.robot.commands.Unfeed;
 import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Shooter;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -44,39 +44,45 @@ import frc.robot.subsystems.Intake;
 public class RobotContainer {
   // The robot's subsystems
   private final DriveTrain m_driveTrain;
-  private final Climber m_climber;
   private final Intake m_intake;
   private final Arm m_arm;
+  private final Feeder m_feeder;
+  private final Shooter m_shooter;
 
   // The robot's commands
   private final ArcadeDrive m_driveCommand;
-  private final Climb m_climbCommand;
-  private final StopClimb m_stopClimbCommand;
-  private final ResetClimb m_resetClimbCommand;
   private final Harvest m_harvestCommand;
   private final StopHarvest m_stopHarvestCommand;
   private final Eject m_ejectCommand;
   private final RaiseArm m_raiseArmCommand;
   private final StopArm m_stopArmCommand;
   private final LowerArm m_lowerArmCommand;
-  private final RunAndDump m_runAndDumpCommand;
-  private final DumpAndRun m_dumpAndRunCommand;
-  private final ZagLeftAndDump m_zagLeftAndDumpCommand;
-  private final ZagRightAndDump m_zagRightAndDumpCommand;
-  private final RunForward m_runForwardCommand;
-  private final RunBackward m_runBackwardCommand;
-  private final RunAndDumpAndRun m_runAndDumpAndRunCommand;
+  private final Feed m_feedCommand;
+  private final StopFeed m_stopFeedCommand;
+  private final Unfeed m_unfeedCommand;
+  private final Shoot1 m_shoot1Command;
+  private final Shoot2 m_shoot2Command;
+  private final Shoot3 m_shoot3Command;
+  private final Shoot4 m_shoot4Command;
+  private final StopShooter m_stopShooterCommand;
+  private final ClearBall m_clearBallCommand;
  
   // The Xbox controller
-  XboxController m_driverController;
+  XboxController m_driverController1;
+  XboxController m_driverController2;
 
   //The command buttons
-  JoystickButton m_climbButton;
-  JoystickButton m_resetClimbButton;
   JoystickButton m_harvestButton;
   JoystickButton m_ejectButton;
   JoystickButton m_raiseArmButton;
   JoystickButton m_lowerArmButton;
+  JoystickButton m_feedButton;
+  JoystickButton m_unfeedButton;
+  JoystickButton m_shoot1Button;
+  JoystickButton m_shoot2Button;
+  JoystickButton m_shoot3Button;
+  JoystickButton m_shoot4Button;
+  JoystickButton m_clearBallButton;
 
   public static SendableChooser<Command> m_chooser;
 
@@ -85,17 +91,15 @@ public class RobotContainer {
    */
   public RobotContainer() {
     m_driveTrain = new DriveTrain();
-    m_climber = new Climber();
     m_intake = new Intake();
     m_arm = new Arm();
-    m_driverController = new XboxController(Constants.IOConstants.kControllerPort);
+    m_feeder = new Feeder();
+    m_shooter = new Shooter();
+    m_driverController1 = new XboxController(Constants.IOConstants.kControllerPort1);
+    m_driverController2 = new XboxController(Constants.IOConstants.kControllerPort2);
 
-    m_driveCommand = new ArcadeDrive(m_driveTrain, m_driverController);
+    m_driveCommand = new ArcadeDrive(m_driveTrain, m_driverController1);
     m_driveTrain.setDefaultCommand(m_driveCommand);
-
-    m_climbCommand = new Climb(m_climber);
-    m_stopClimbCommand = new StopClimb(m_climber);
-    m_resetClimbCommand = new ResetClimb(m_climber);
 
     m_harvestCommand = new Harvest(m_intake);
     m_stopHarvestCommand = new StopHarvest(m_intake);
@@ -105,29 +109,27 @@ public class RobotContainer {
     m_stopArmCommand = new StopArm(m_arm);
     m_lowerArmCommand = new LowerArm(m_arm);
 
-    m_runAndDumpCommand = new RunAndDump(m_driveTrain, m_arm, m_intake);
-    m_dumpAndRunCommand = new DumpAndRun(m_driveTrain, m_arm, m_intake);
-    m_zagLeftAndDumpCommand = new ZagLeftAndDump(m_driveTrain, m_arm, m_intake);
-    m_zagRightAndDumpCommand = new ZagRightAndDump(m_driveTrain, m_arm, m_intake);
-    m_runForwardCommand = new RunForward(m_driveTrain, m_arm);
-    m_runBackwardCommand = new RunBackward(m_driveTrain, m_arm);
-    m_runAndDumpAndRunCommand = new RunAndDumpAndRun(m_driveTrain, m_arm, m_intake);
+    m_feedCommand = new Feed(m_feeder);
+    m_stopFeedCommand = new StopFeed(m_feeder);
+    m_unfeedCommand = new Unfeed(m_feeder);
 
-    m_climbButton = new JoystickButton(m_driverController, Constants.IOConstants.kAButton);
-    m_resetClimbButton = new JoystickButton(m_driverController, Constants.IOConstants.kBButton);
-    m_harvestButton = new JoystickButton(m_driverController, Constants.IOConstants.kRBButton);
-    m_ejectButton = new JoystickButton(m_driverController, Constants.IOConstants.kLBButton);
-    m_raiseArmButton = new JoystickButton(m_driverController, Constants.IOConstants.kYButton);
-    m_lowerArmButton = new JoystickButton(m_driverController, Constants.IOConstants.kXButton);
+    m_shoot1Command = new Shoot1(m_shooter);
+    m_shoot2Command = new Shoot2(m_shooter);
+    m_shoot3Command = new Shoot3(m_shooter);
+    m_shoot4Command = new Shoot4(m_shooter);
+    m_stopShooterCommand = new StopShooter(m_shooter);
+    m_clearBallCommand = new ClearBall(m_shooter);
+
+    m_harvestButton = new JoystickButton(m_driverController1, Constants.IOConstants.kRBButton);
+    m_ejectButton = new JoystickButton(m_driverController1, Constants.IOConstants.kLBButton);
+    m_raiseArmButton = new JoystickButton(m_driverController1, Constants.IOConstants.kYButton);
+    m_lowerArmButton = new JoystickButton(m_driverController1, Constants.IOConstants.kAButton);
+
+    m_clearBallButton = new JoystickButton(m_driverController2, Constants.IOConstants.kLBButton);
+    m_unfeedButton = new JoystickButton(m_driverController2, Constants.IOConstants.kRBButton);
+    m_feedButton = new JoystickButton(m_driverController2, Constants.IOConstants.kAButton);
 
     m_chooser = new SendableChooser<Command>();
-    m_chooser.setDefaultOption("RunAndDump", m_runAndDumpCommand);
-    m_chooser.setDefaultOption("RunAndDumpAndRun", m_runAndDumpAndRunCommand);
-    m_chooser.addOption("DumpAndRun", m_dumpAndRunCommand);
-    m_chooser.addOption("ZagLeftAndRun", m_zagLeftAndDumpCommand);
-    m_chooser.addOption("ZagRightAndRun", m_zagRightAndDumpCommand);
-    m_chooser.addOption("RunForward", m_runForwardCommand);
-    m_chooser.addOption("RunBackward", m_runBackwardCommand);
 
     Shuffleboard.getTab("ComboBox Chooser").add(m_chooser);
 
@@ -142,10 +144,6 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    m_climbButton.whenPressed(m_climbCommand);
-    m_climbButton.whenReleased(m_stopClimbCommand);
-    m_resetClimbButton.whenPressed(m_resetClimbCommand);
-    m_resetClimbButton.whenReleased(m_stopClimbCommand);
 
     m_harvestButton.whenPressed(m_harvestCommand);
     m_harvestButton.whenReleased(m_stopHarvestCommand);
@@ -156,6 +154,14 @@ public class RobotContainer {
     m_raiseArmButton.whenReleased(m_stopArmCommand);
     m_lowerArmButton.whenPressed(m_lowerArmCommand);
     m_lowerArmButton.whenReleased(m_stopArmCommand);
+
+    m_clearBallButton.whenPressed(m_clearBallCommand);
+    m_clearBallButton.whenReleased(m_stopShooterCommand);
+
+    m_feedButton.whenPressed(m_feedCommand);
+    m_feedButton.whenReleased(m_stopFeedCommand);
+    m_unfeedButton.whenPressed(m_unfeedCommand);
+    m_unfeedButton.whenReleased(m_stopFeedCommand);
   }
 
   /**

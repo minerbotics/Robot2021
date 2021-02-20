@@ -24,7 +24,8 @@ public final class Constants {
     }
 
     public final static class IOConstants {
-        public final static int kControllerPort = 0;
+        public final static int kControllerPort1 = 0;
+        public final static int kControllerPort2 = 1;
         public final static int kAButton = 1;
         public final static int kBButton = 2;
         public final static int kRBButton = 6;
@@ -33,15 +34,19 @@ public final class Constants {
         public final static int kXButton = 3;
     }
 
-    public final static class ClimbConstants {
-        public final static int kClimbMotorPort = 0;
-    }
-
     public final static class ArmConstants {
         public final static int kArmMotorPort = 1;
     }
 
     public final static class IntakeConstants {
         public final static int kIntakeMotorPort = 2;
+    }
+
+    public final static class FeederConstants {
+        public final static int kFeederMotorPort = 3;
+    }
+
+    public final static class ShooterConstants {
+        public final static int kShooterMotorPort = 4;
     }
 }
