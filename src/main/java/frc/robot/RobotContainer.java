@@ -125,9 +125,14 @@ public class RobotContainer {
     m_raiseArmButton = new JoystickButton(m_driverController1, Constants.IOConstants.kYButton);
     m_lowerArmButton = new JoystickButton(m_driverController1, Constants.IOConstants.kAButton);
 
-    m_clearBallButton = new JoystickButton(m_driverController2, Constants.IOConstants.kLBButton);
-    m_unfeedButton = new JoystickButton(m_driverController2, Constants.IOConstants.kRBButton);
-    m_feedButton = new JoystickButton(m_driverController2, Constants.IOConstants.kAButton);
+    m_clearBallButton = new JoystickButton(m_driverController2, Constants.IOConstants.kRBButton);
+    m_unfeedButton = new JoystickButton(m_driverController2, Constants.IOConstants.kStartButton);
+    m_feedButton = new JoystickButton(m_driverController2, Constants.IOConstants.kBackButton);
+    m_shoot1Button = new JoystickButton(m_driverController2, Constants.IOConstants.kAButton);
+    m_shoot2Button = new JoystickButton(m_driverController2, Constants.IOConstants.kBButton);
+    m_shoot3Button = new JoystickButton(m_driverController2, Constants.IOConstants.kXButton);
+    m_shoot4Button = new JoystickButton(m_driverController2, Constants.IOConstants.kYButton);
+
 
     m_chooser = new SendableChooser<Command>();
 
@@ -162,6 +167,16 @@ public class RobotContainer {
     m_feedButton.whenReleased(m_stopFeedCommand);
     m_unfeedButton.whenPressed(m_unfeedCommand);
     m_unfeedButton.whenReleased(m_stopFeedCommand);
+
+    m_shoot1Button.whenPressed(m_shoot1Command);
+    m_shoot1Button.whenReleased(m_stopShooterCommand);
+    m_shoot2Button.whenPressed(m_shoot2Command);
+    m_shoot2Button.whenReleased(m_stopShooterCommand);
+    m_shoot3Button.whenPressed(m_shoot3Command);
+    m_shoot3Button.whenReleased(m_stopShooterCommand);
+    m_shoot4Button.whenPressed(m_shoot4Command);
+    m_shoot4Button.whenReleased(m_stopShooterCommand);
+
   }
 
   /**

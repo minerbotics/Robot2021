@@ -28,18 +28,23 @@ public final class Constants {
         public final static int kControllerPort2 = 1;
         public final static int kAButton = 1;
         public final static int kBButton = 2;
-        public final static int kRBButton = 6;
-        public final static int kLBButton = 5;
-        public final static int kYButton = 4;
         public final static int kXButton = 3;
+        public final static int kYButton = 4;
+        public final static int kLBButton = 5;
+        public final static int kRBButton = 6;
+        public final static int kBackButton = 7;
+        public final static int kStartButton = 8;
+        public final static int kLSButton = 9;
+        public final static int kRSButton = 0;
     }
 
     public final static class ArmConstants {
         public final static int kArmMotorPort = 1;
     }
 
+
     public final static class IntakeConstants {
-        public final static int kIntakeMotorPort = 2;
+        public final static int kIntakeMotorPort = 0;
     }
 
     public final static class FeederConstants {
@@ -47,6 +52,6 @@ public final class Constants {
     }
 
     public final static class ShooterConstants {
-        public final static int kShooterMotorPort = 4;
+        public final static int kShooterMotorPort = 2;
     }
 }
