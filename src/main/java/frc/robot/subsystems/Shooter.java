@@ -23,19 +23,19 @@ public class Shooter extends SubsystemBase {
   }
 
   public void shoot1() {
-    shooterMotor.set(-0.25);
+    shooterMotor.set(0.25);
   }
 
   public void shoot2() {
-    shooterMotor.set(-0.5);
+    shooterMotor.set(0.5);
   }
 
   public void shoot3() {
-    shooterMotor.set(-0.75);
+    shooterMotor.set(0.75);
   }
 
   public void shoot4() {
-    shooterMotor.set(-1);
+    shooterMotor.set(1);
   }
 
   public void stop() {
