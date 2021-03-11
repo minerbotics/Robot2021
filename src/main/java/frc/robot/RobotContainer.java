@@ -17,6 +17,7 @@ import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.ClearBall;
 import frc.robot.commands.Eject;
 import frc.robot.commands.Feed;
+import frc.robot.commands.GalacticSearch;
 import frc.robot.commands.Harvest;
 import frc.robot.commands.LowerArm;
 import frc.robot.commands.RaiseArm;
@@ -66,6 +67,7 @@ public class RobotContainer {
   private final Shoot4 m_shoot4Command;
   private final StopShooter m_stopShooterCommand;
   private final ClearBall m_clearBallCommand;
+  private final GalacticSearch m_galacticSearchCommand;
  
   // The Xbox controller
   XboxController m_driverController1;
@@ -133,10 +135,13 @@ public class RobotContainer {
     m_shoot3Button = new JoystickButton(m_driverController2, Constants.IOConstants.kXButton);
     m_shoot4Button = new JoystickButton(m_driverController2, Constants.IOConstants.kYButton);
 
+    m_galacticSearchCommand = new GalacticSearch(m_driveTrain, m_arm, m_intake);
+
 
     m_chooser = new SendableChooser<Command>();
 
     Shuffleboard.getTab("ComboBox Chooser").add(m_chooser);
+    m_chooser.addOption("GalacticSearch", m_galacticSearchCommand);
 
     // Configure the button bindings
     configureButtonBindings();

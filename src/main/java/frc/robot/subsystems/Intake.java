@@ -31,7 +31,7 @@ public class Intake extends SubsystemBase {
   }
 
   public void eject() {
-    intakeMotor.set(0.75);
+    intakeMotor.set(1);
   }
 
   @Override
