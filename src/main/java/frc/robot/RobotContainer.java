@@ -14,6 +14,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ArcadeDrive;
+import frc.robot.commands.AutoNavBarrelRacing;
+import frc.robot.commands.AutoNavBounce;
+import frc.robot.commands.AutoNavSlalom;
 import frc.robot.commands.ClearBall;
 import frc.robot.commands.Eject;
 import frc.robot.commands.Feed;
@@ -68,6 +71,9 @@ public class RobotContainer {
   private final StopShooter m_stopShooterCommand;
   private final ClearBall m_clearBallCommand;
   private final GalacticSearch m_galacticSearchCommand;
+  private final AutoNavBarrelRacing m_autoNavBarrelRacingCommand;
+  private final AutoNavSlalom m_autoNavSlalomCommand;
+  private final AutoNavBounce m_autoNavBounceCommand;
  
   // The Xbox controller
   XboxController m_driverController1;
@@ -136,12 +142,20 @@ public class RobotContainer {
     m_shoot4Button = new JoystickButton(m_driverController2, Constants.IOConstants.kYButton);
 
     m_galacticSearchCommand = new GalacticSearch(m_driveTrain, m_arm, m_intake);
+    m_autoNavBarrelRacingCommand = new AutoNavBarrelRacing(m_driveTrain);
+    m_autoNavSlalomCommand = new AutoNavSlalom(m_driveTrain);
+    m_autoNavBounceCommand = new AutoNavBounce(m_driveTrain);
 
 
-    m_chooser = new SendableChooser<Command>();
+    m_chooser = new SendableChooser<>();
 
     Shuffleboard.getTab("ComboBox Chooser").add(m_chooser);
+    m_chooser.setDefaultOption("GalacticSearch", m_galacticSearchCommand);
     m_chooser.addOption("GalacticSearch", m_galacticSearchCommand);
+    m_chooser.addOption("AutoNavBarrelRacing", m_autoNavBarrelRacingCommand);
+    m_chooser.addOption("AutoNavSlalom", m_autoNavSlalomCommand);
+    m_chooser.addOption("AutoNavBounce", m_autoNavBounceCommand);
+    
 
     // Configure the button bindings
     configureButtonBindings();
