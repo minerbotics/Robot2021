@@ -31,7 +31,7 @@ public class Arm extends SubsystemBase {
   }
 
   public void lower() {
-    armMotor.set(-0.25);
+    armMotor.set(-0.45);
   }
 
   @Override
